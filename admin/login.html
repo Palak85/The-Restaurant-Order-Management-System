@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Akay Cafe</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('../uploads/img9.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+        .login-wrapper {
+            display: flex;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 900px;
+            max-width: 95%;
+            margin: 20px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+        .login-image {
+            flex: 1;
+            background-image: url('../uploads/img7.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .login-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .login-container {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo h1 {
+            color: #a96700;
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .logo p {
+            color: #666;
+            margin-top: 5px;
+            font-size: 1.1em;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+        .form-group input:focus {
+            border-color: #a96700;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(169, 103, 0, 0.1);
+            background-color: #fff;
+        }
+        button {
+            background-color: #a96700;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #8a5300;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(169, 103, 0, 0.2);
+        }
+        .error-message {
+            color: #d9534f;
+            margin-top: 15px;
+            text-align: center;
+            display: none;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: rgba(248, 215, 218, 0.9);
+            border: 1px solid #f5c6cb;
+        }
+        @media (max-width: 768px) {
+            .login-wrapper {
+                flex-direction: column;
+                width: 100%;
+            }
+            .login-image {
+                height: 200px;
+        }
+            .login-container {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-image"></div>
+    <div class="login-container">
+        <div class="logo">
+            <h1>Akay Cafe</h1>
+            <p>Admin Portal</p>
+        </div>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <div id="errorMessage" class="error-message"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('adminLoginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Send login request to admin_login.php
+            fetch('../admin/admin_login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'username=' + encodeURIComponent(username) + '&password=' + encodeURIComponent(password)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    // Redirect to admin dashboard
+                    window.location.href = 'dashboard.php';
+                } else {
+                    // Show error message
+                    const errorMessage = document.getElementById('errorMessage');
+                    errorMessage.textContent = data.message;
+                    errorMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const errorMessage = document.getElementById('errorMessage');
+                errorMessage.textContent = 'An error occurred. Please try again.';
+                errorMessage.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
