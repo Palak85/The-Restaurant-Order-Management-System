@@ -1,2 +1,2 @@
-# The-Restaurant-Order-Management-System
-A full-stack web application designed to streamline the online food ordering and management process for restaurants.
+Click on the to see the project : 
+https://aquamarine-frangipane-6ec647.netlify.app/

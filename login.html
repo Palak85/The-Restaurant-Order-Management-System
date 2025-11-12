@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akay Resturant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
+</head>
+<body class="bg-gray-100 min-h-screen font-['Source_Sans_Pro']">
+    <!-- Navigation -->
+    <nav class="bg-gray-900 p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="index.html" class="text-white text-4xl font-['Herr_Von_Muellerhoff']">Akay Cafe</a>
+            <a href="index.html" class="text-white hover:text-gray-300 transition duration-300">Back to Home</a>
+        </div>
+    </nav>
+
+<!-- Main Content -->
+<div class="container mx-auto px-4 py-8">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row gap-8 min-h-[80vh] ">
+        <!-- Left Side - Image -->
+        <div class="flex-1 basis-1/2 max-w-lg">
+            <div class="h-full w-full relative overflow-hidden rounded-lg shadow-lg">
+                <img src="img4.jpg" alt="Akay Cafe Interior" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-2xl font-semibold mb-2">Welcome to Akay Cafe</h3>
+                    <p class="text-sm opacity-90">Experience the finest dining in town</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login/Signup Forms -->
+        <div class="flex-1 basis-1/2 flex items-center">
+            <div class="w-full">
+                <!-- Login Form -->
+                <div id="loginForm" class="bg-white p-8 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Akay Cafe</h2>
+                    <p class="text-center text-gray-600 mb-6"> Indulge in life's greatest pleasure: food.</p>
+
+                    <div class="flex mb-8 border-b">
+                        <button onclick="showLogin()" id="loginTab" class="flex-1 py-2 text-center text-gray-900 font-semibold border-b-2 border-gray-900">Login</button>
+                        <button onclick="showSignup()" id="signupTab" class="flex-1 py-2 text-center text-gray-500">Sign Up</button>
+                    </div>
+                    
+                    <form id="loginFormElement" class="space-y-4">
+                        <div id="loginMessage" class="hidden p-3 rounded"></div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="email">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="password">Password</label>
+                            <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div class="flex justify-end">
+                            <a href="#" onclick="showForgotPassword()" class="text-sm text-blue-600 hover:text-blue-800 transition duration-300">Forgot Password?</a>
+                        </div>
+                        <button type="button" onclick="handleLogin()" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300 transform hover:scale-[1.02]">Login</button>
+                    </form>
+                    <p class="mt-4 text-center text-gray-600">
+                        Don't have an account? 
+                        <a href="#" onclick="showSignup()" class="text-blue-600 hover:text-blue-800 transition duration-300">Sign up</a>
+                    </p>
+                </div>
+
+                <!-- Signup Form -->
+                <div id="signupForm" class="hidden bg-white p-8 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Create Account</h2>
+                    <form id="signupFormElement" class="space-y-4">
+                        <div id="signupMessage" class="hidden p-3 rounded"></div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="signupName">Full Name</label>
+                            <input type="text" id="signupName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="signupEmail">Email</label>
+                            <input type="email" id="signupEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <button type="button" onclick="handleSignup()" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300 transform hover:scale-[1.02]">Sign Up</button>
+                    </form>
+                    <p class="mt-4 text-center text-gray-600">
+                        Already have an account? 
+                        <a href="#" onclick="showLogin()" class="text-blue-600 hover:text-blue-800 transition duration-300">Login</a>
+                    </p>
+                </div>
+                
+                <!-- Forgot Password Form -->
+                <div id="forgotPasswordForm" class="hidden bg-white p-8 rounded-lg shadow-lg">
+                    <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">Reset Password</h2>
+                    <p class="text-center text-gray-600 mb-6">Enter your email address and we'll send you a link to reset your password.</p>
+                    <form id="forgotPasswordFormElement" class="space-y-4">
+                        <div id="forgotPasswordMessage" class="hidden p-3 rounded"></div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" for="resetEmail">Email</label>
+                            <input type="email" id="resetEmail" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <button type="button" onclick="handleForgotPassword()" class="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300 transform hover:scale-[1.02]">Reset Password</button>
+                    </form>
+                    <p class="mt-4 text-center text-gray-600">
+                        Remember your password? 
+                        <a href="#" onclick="showLogin()" class="text-blue-600 hover:text-blue-800 transition duration-300">Back to Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        function showLogin() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
+            
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+            forgotPasswordForm.classList.add('hidden');
+            
+            // Update tab styles
+            loginTab.classList.add('text-gray-900', 'border-b-2', 'border-gray-900');
+            loginTab.classList.remove('text-gray-500');
+            signupTab.classList.remove('text-gray-900', 'border-b-2', 'border-gray-900');
+            signupTab.classList.add('text-gray-500');
+        }
+
+        function showSignup() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            const loginTab = document.getElementById('loginTab');
+            const signupTab = document.getElementById('signupTab');
+            
+            loginForm.classList.add('hidden');
+            signupForm.classList.remove('hidden');
+            forgotPasswordForm.classList.add('hidden');
+            
+            // Update tab styles
+            signupTab.classList.add('text-gray-900', 'border-b-2', 'border-gray-900');
+            signupTab.classList.remove('text-gray-500');
+            loginTab.classList.remove('text-gray-900', 'border-b-2', 'border-gray-900');
+            loginTab.classList.add('text-gray-500');
+        }
+        
+        function showForgotPassword() {
+            const loginForm = document.getElementById('loginForm');
+            const signupForm = document.getElementById('signupForm');
+            const forgotPasswordForm = document.getElementById('forgotPasswordForm');
+            
+            loginForm.classList.add('hidden');
+            signupForm.classList.add('hidden');
+            forgotPasswordForm.classList.remove('hidden');
+        }
+
+        function showMessage(element, message, isError) {
+            element.textContent = message;
+            element.classList.remove('hidden');
+            
+            if (isError) {
+                element.classList.add('bg-red-100', 'text-red-800');
+                element.classList.remove('bg-green-100', 'text-green-800');
+            } else {
+                element.classList.add('bg-green-100', 'text-green-800');
+                element.classList.remove('bg-red-100', 'text-red-800');
+            }
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('loginMessage');
+
+            if (!email || !password) {
+                showMessage(messageDiv, 'Please fill all fields', true);
+                return;
+            }
+
+            // Send as JSON instead of FormData
+            fetch('login.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(messageDiv, 'Login successful! Redirecting...', false);
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showMessage(messageDiv, data.message || 'Invalid email or password', true);
+                }
+            })
+            .catch(error => {
+                showMessage(messageDiv, 'An error occurred. Please try again.', true);
+                console.error('Error:', error);
+            });
+        }
+
+        function handleSignup() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const messageDiv = document.getElementById('signupMessage');
+
+            if (!name || !email || !password || !confirmPassword) {
+                showMessage(messageDiv, 'Please fill all fields', true);
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showMessage(messageDiv, 'Passwords do not match!', true);
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('name', name);
+            formData.append('email', email);
+            formData.append('password', password);
+
+            fetch('register.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    showMessage(messageDiv, 'Registration successful! Redirecting...', false);
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showMessage(messageDiv, data.message, true);
+                }
+            })
+            .catch(error => {
+                showMessage(messageDiv, 'An error occurred. Please try again.', true);
+                console.error('Error:', error);
+            });
+        }
+        
+        function handleForgotPassword() {
+            const email = document.getElementById('resetEmail').value;
+            const messageDiv = document.getElementById('forgotPasswordMessage');
+
+            if (!email) {
+                showMessage(messageDiv, 'Please enter your email address', true);
+                return;
+            }
+
+            // Create form data
+            const formData = new FormData();
+            formData.append('email', email);
+
+            fetch('forgot-password.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showMessage(messageDiv, data.message, false);
+                    setTimeout(() => {
+                        showLogin();
+                    }, 3000);
+                } else {
+                    showMessage(messageDiv, data.message, true);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage(messageDiv, 'An error occurred. Please try again.', true);
+            });
+        }
+
+        // Initialize the page with login form visible
+        document.addEventListener('DOMContentLoaded', function() {
+            showLogin();
+        });
+    </script>
+</body>
+</html>

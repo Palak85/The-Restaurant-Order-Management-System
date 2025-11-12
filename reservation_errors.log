@@ -1,0 +1,172 @@
+[18-Apr-2025 17:25:53 Europe/Berlin] Reservation attempt started: 2025-04-18 17:25:53
+[18-Apr-2025 17:25:53 Europe/Berlin] Database connection established
+[18-Apr-2025 17:25:53 Europe/Berlin] Session data: Array
+(
+    [user_id] => 7
+    [user_name] => a
+    [user_email] => test@gmail.com
+    [admin_id] => 1
+    [admin_username] => admin
+    [is_admin] => 1
+)
+
+[18-Apr-2025 17:25:53 Europe/Berlin] POST data: Array
+(
+    [date] => 2025-04-19
+    [time] => 20:57
+    [guests] => 1
+    [requests] => 
+)
+
+[18-Apr-2025 17:25:53 Europe/Berlin] Reservation data: date=2025-04-19, time=20:57, guests=1
+[18-Apr-2025 17:25:53 Europe/Berlin] Executing query: SELECT id, capacity FROM restaurant_tables WHERE capacity >= 1 AND is_available = 1 ORDER BY capacity ASC LIMIT 1
+[18-Apr-2025 17:25:53 Europe/Berlin] Found table ID: 8 with capacity: 2
+[18-Apr-2025 17:25:53 Europe/Berlin] Checking existing reservations: SELECT id FROM reservations WHERE table_id = 8 AND reservation_date = '2025-04-19' AND reservation_time = '20:57'
+[18-Apr-2025 17:25:53 Europe/Berlin] Creating reservation: INSERT INTO reservations (user_id, table_id, reservation_date, reservation_time, guests, special_requests) 
+                      VALUES (7, 8, '2025-04-19', '20:57', 1, '')
+[18-Apr-2025 17:25:53 Europe/Berlin] Updating table availability: UPDATE restaurant_tables SET is_available = 0 WHERE id = 8
+[18-Apr-2025 17:25:53 Europe/Berlin] Reservation created successfully with ID: 70
+[18-Apr-2025 17:25:53 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'rest.tables' doesn't exist in C:\xampp\htdocs\test\book_table.php:247
+Stack trace:
+#0 C:\xampp\htdocs\test\book_table.php(247): mysqli->query('SELECT id FROM ...')
+#1 {main}
+  thrown in C:\xampp\htdocs\test\book_table.php on line 247
+[18-Apr-2025 17:28:38 Europe/Berlin] Reservation attempt started: 2025-04-18 17:28:38
+[18-Apr-2025 17:28:38 Europe/Berlin] Database connection established
+[18-Apr-2025 17:28:38 Europe/Berlin] Session data: Array
+(
+    [user_id] => 7
+    [user_name] => a
+    [user_email] => test@gmail.com
+    [admin_id] => 1
+    [admin_username] => admin
+    [is_admin] => 1
+)
+
+[18-Apr-2025 17:28:38 Europe/Berlin] POST data: Array
+(
+    [date] => 2025-04-22
+    [time] => 20:01
+    [guests] => 1
+    [requests] => 
+)
+
+[18-Apr-2025 17:28:38 Europe/Berlin] Reservation data: date=2025-04-22, time=20:01, guests=1
+[18-Apr-2025 17:28:38 Europe/Berlin] Executing query: SELECT id, capacity FROM restaurant_tables WHERE capacity >= 1 AND is_available = 1 ORDER BY capacity ASC LIMIT 1
+[18-Apr-2025 17:28:38 Europe/Berlin] Found table ID: 14 with capacity: 4
+[18-Apr-2025 17:28:38 Europe/Berlin] Checking existing reservations: SELECT id FROM reservations WHERE table_id = 14 AND reservation_date = '2025-04-22' AND reservation_time = '20:01'
+[18-Apr-2025 17:28:38 Europe/Berlin] Creating reservation: INSERT INTO reservations (user_id, table_id, reservation_date, reservation_time, guests, special_requests) 
+                      VALUES (7, 14, '2025-04-22', '20:01', 1, '')
+[18-Apr-2025 17:28:38 Europe/Berlin] Updating table availability: UPDATE restaurant_tables SET is_available = 0 WHERE id = 14
+[18-Apr-2025 17:28:38 Europe/Berlin] Reservation created successfully with ID: 71
+[18-Apr-2025 17:28:38 Europe/Berlin] Final response: {"status":"success","message":"Your table has been reserved successfully! Confirmation #71","reservation":{"id":71,"date":"2025-04-22","time":"20:01","guests":1,"table_id":"14"}}
+[18-Apr-2025 17:32:56 Europe/Berlin] Reservation attempt started: 2025-04-18 17:32:56
+[18-Apr-2025 17:32:56 Europe/Berlin] Database connection established
+[18-Apr-2025 17:32:56 Europe/Berlin] Session data: Array
+(
+    [user_id] => 7
+    [user_name] => a
+    [user_email] => test@gmail.com
+    [admin_id] => 1
+    [admin_username] => admin
+    [is_admin] => 1
+)
+
+[18-Apr-2025 17:32:56 Europe/Berlin] POST data: Array
+(
+    [date] => 2025-04-19
+    [time] => 21:05
+    [guests] => 1
+    [requests] => 
+)
+
+[18-Apr-2025 17:32:56 Europe/Berlin] Reservation data: date=2025-04-19, time=21:05, guests=1
+[18-Apr-2025 17:32:56 Europe/Berlin] Executing query: SELECT id, capacity FROM restaurant_tables WHERE capacity >= 1 AND is_available = 1 ORDER BY capacity ASC LIMIT 1
+[18-Apr-2025 17:32:56 Europe/Berlin] Found table ID: 12 with capacity: 5
+[18-Apr-2025 17:32:56 Europe/Berlin] Checking existing reservations: SELECT id FROM reservations WHERE table_id = 12 AND reservation_date = '2025-04-19' AND reservation_time = '21:05'
+[18-Apr-2025 17:32:56 Europe/Berlin] Creating reservation: INSERT INTO reservations (user_id, table_id, reservation_date, reservation_time, guests, special_requests) 
+                      VALUES (7, 12, '2025-04-19', '21:05', 1, '')
+[18-Apr-2025 17:32:56 Europe/Berlin] Updating table availability: UPDATE restaurant_tables SET is_available = 0 WHERE id = 12
+[18-Apr-2025 17:32:56 Europe/Berlin] Reservation created successfully with ID: 72
+[18-Apr-2025 17:32:56 Europe/Berlin] Final response: {"status":"success","message":"Your table has been reserved successfully! Confirmation #72","reservation":{"id":72,"date":"2025-04-19","time":"21:05","guests":1,"table_id":"12"}}
+[18-Apr-2025 17:33:04 Europe/Berlin] Order finalization attempt started: 2025-04-18 17:33:04
+[18-Apr-2025 17:33:04 Europe/Berlin] Database connection established
+[18-Apr-2025 17:33:04 Europe/Berlin] POST data: {"table_id":"2","customer_name":"a","items":[{"menu_item_id":12,"quantity":1,"price":10}],"total":10}
+[18-Apr-2025 17:33:04 Europe/Berlin] Parsed input data: Array
+(
+    [table_id] => 2
+    [customer_name] => a
+    [items] => Array
+        (
+            [0] => Array
+                (
+                    [menu_item_id] => 12
+                    [quantity] => 1
+                    [price] => 10
+                )
+
+        )
+
+    [total] => 10
+)
+
+[18-Apr-2025 17:33:04 Europe/Berlin] Order placed successfully with ID: 38 and reservation ID: 73
+[18-Apr-2025 17:33:04 Europe/Berlin] Final response: {"status":"success","message":"Order placed successfully!","order_id":38,"reservation_id":73,"table_number":"2","total":10}
+[18-Apr-2025 17:36:04 Europe/Berlin] Reservation attempt started: 2025-04-18 17:36:04
+[18-Apr-2025 17:36:04 Europe/Berlin] Database connection established
+[18-Apr-2025 17:36:04 Europe/Berlin] Session data: Array
+(
+    [user_id] => 7
+    [user_name] => a
+    [user_email] => test@gmail.com
+    [admin_id] => 1
+    [admin_username] => admin
+    [is_admin] => 1
+)
+
+[18-Apr-2025 17:36:04 Europe/Berlin] POST data: Array
+(
+    [date] => 2025-04-19
+    [time] => 21:08
+    [guests] => 2
+    [requests] => 
+)
+
+[18-Apr-2025 17:36:04 Europe/Berlin] Reservation data: date=2025-04-19, time=21:08, guests=2
+[18-Apr-2025 17:36:04 Europe/Berlin] Executing query: SELECT id, capacity FROM restaurant_tables WHERE capacity >= 2 AND is_available = 1 ORDER BY capacity ASC LIMIT 1
+[18-Apr-2025 17:36:04 Europe/Berlin] Found table ID: 11 with capacity: 2
+[18-Apr-2025 17:36:04 Europe/Berlin] Checking existing reservations: SELECT id FROM reservations WHERE table_id = 11 AND reservation_date = '2025-04-19' AND reservation_time = '21:08'
+[18-Apr-2025 17:36:04 Europe/Berlin] Creating reservation: INSERT INTO reservations (user_id, table_id, reservation_date, reservation_time, guests, special_requests) 
+                      VALUES (7, 11, '2025-04-19', '21:08', 2, '')
+[18-Apr-2025 17:36:04 Europe/Berlin] Updating table availability: UPDATE restaurant_tables SET is_available = 0 WHERE id = 11
+[18-Apr-2025 17:36:04 Europe/Berlin] Reservation created successfully with ID: 74
+[18-Apr-2025 17:36:04 Europe/Berlin] Final response: {"status":"success","message":"Your table has been reserved successfully! Confirmation #74","reservation":{"id":74,"date":"2025-04-19","time":"21:08","guests":2,"table_id":"11"}}
+[18-Apr-2025 17:38:37 Europe/Berlin] Reservation attempt started: 2025-04-18 17:38:37
+[18-Apr-2025 17:38:37 Europe/Berlin] Database connection established
+[18-Apr-2025 17:38:37 Europe/Berlin] Session data: Array
+(
+    [user_id] => 7
+    [user_name] => a
+    [user_email] => test@gmail.com
+    [admin_id] => 1
+    [admin_username] => admin
+    [is_admin] => 1
+)
+
+[18-Apr-2025 17:38:37 Europe/Berlin] POST data: Array
+(
+    [date] => 2025-04-19
+    [time] => 14:08
+    [guests] => 1
+    [requests] => 
+)
+
+[18-Apr-2025 17:38:37 Europe/Berlin] Reservation data: date=2025-04-19, time=14:08, guests=1
+[18-Apr-2025 17:38:37 Europe/Berlin] Executing query: SELECT id, capacity FROM restaurant_tables WHERE capacity >= 1 AND is_available = 1 ORDER BY capacity ASC LIMIT 1
+[18-Apr-2025 17:38:37 Europe/Berlin] Found table ID: 12 with capacity: 5
+[18-Apr-2025 17:38:37 Europe/Berlin] Checking existing reservations: SELECT id FROM reservations WHERE table_id = 12 AND reservation_date = '2025-04-19' AND reservation_time = '14:08'
+[18-Apr-2025 17:38:37 Europe/Berlin] Creating reservation: INSERT INTO reservations (user_id, table_id, reservation_date, reservation_time, guests, special_requests) 
+                      VALUES (7, 12, '2025-04-19', '14:08', 1, '')
+[18-Apr-2025 17:38:37 Europe/Berlin] Updating table availability: UPDATE restaurant_tables SET is_available = 0 WHERE id = 12
+[18-Apr-2025 17:38:37 Europe/Berlin] Reservation created successfully with ID: 77
+[18-Apr-2025 17:38:37 Europe/Berlin] Final response: {"status":"success","message":"Your table has been reserved successfully! Confirmation #77","reservation":{"id":77,"date":"2025-04-19","time":"14:08","guests":1,"table_id":"12"}}

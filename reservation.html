@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book a Table - Akay Cafe and Restaurant</title>
+    <style>
+      /* Basic Reset */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        padding-top: 40px;
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('img1.jpg') no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+        position: relative;
+        color: #333;
+      }
+
+      /* Header and Navigation Styles */
+      header nav {
+        width: 100%;
+        background-color: rgba(19, 2, 2, 0.95);
+        z-index: 20;
+        height: 60px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .logo-name {
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 24px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      }
+
+      .navigation-bar {
+        margin-left: auto;
+      }
+
+      .navigation-bar ul {
+        display: flex;
+        list-style: none;
+      }
+
+      .navigation-bar ul li {
+        margin: 0 15px;
+      }
+
+      .navigation-bar a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        padding: 5px 10px;
+        border-radius: 4px;
+      }
+
+      .navigation-bar a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+
+      /* Form Container */
+      .reservation-form-container {
+        max-width: 1200px;
+        margin: 100px auto 60px;
+        padding: 40px;
+        background-color: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(10px);
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+      }
+
+      .reservation-form-container:hover {
+        transform: translateY(-5px);
+      }
+
+      .form-image {
+        flex: 1;
+        min-width: 300px;
+        height: 500px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        background-color: #f5f5f5; /* Fallback color if image fails to load */
+      }
+
+      .form-image::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, rgba(0,0,0,0.2), transparent);
+      }
+
+      .form-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+        display: block; /* Ensure image is displayed as block */
+      }
+
+      .form-image:hover img {
+        transform: scale(1.05);
+      }
+
+      .form-content {
+        flex: 1;
+        min-width: 300px;
+      }
+
+      .form-content h2 {
+        text-align: center;
+        color: #000;
+        margin-bottom: 30px;
+        font-size: 2.2em;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        position: relative;
+        padding-bottom: 15px;
+      }
+
+      .form-content h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100px;
+        height: 3px;
+        background: linear-gradient(to right, #333, transparent);
+      }
+
+      /* Form Elements */
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #000;
+        font-weight: 500;
+        font-size: 1.1em;
+      }
+
+      .reservation-form-container input,
+      .reservation-form-container textarea {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 2px solid rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .reservation-form-container input:focus,
+      .reservation-form-container textarea:focus {
+        outline: none;
+        border-color: #333;
+        background-color: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .reservation-form-container button {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(45deg, #333, #444);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .reservation-form-container button:hover {
+        background: linear-gradient(45deg, #444, #555);
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .status-message {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        display: none;
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .status-message.success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .status-message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      @media (max-width: 768px) {
+        .reservation-form-container {
+          flex-direction: column;
+          padding: 20px;
+          margin: 80px 20px 40px;
+        }
+
+        .form-image {
+          width: 100%;
+          height: 300px;
+        }
+
+        .navigation-bar ul {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        .navigation-bar ul li {
+          margin: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Your header with navigation -->
+    <header>
+      <nav>
+        <div class="logo">
+          <a href="index.html">
+            <h2 class="logo-name">Akay Cafe and Restaurant</h2>
+          </a>
+        </div>
+        <div class="navigation-bar">
+          <ul>
+            <li class="active">
+              <a href="index.html" style="font-size: 20px"
+                >Home<span class="underline"></span
+              ></a>
+            </li>
+            <li>
+              <a href="reservation.html" style="font-size: 20px" 
+                >Reservations<span class="underline"></span
+              ></a>
+            </li>
+            <li>
+              <a href="menu.html" style="font-size: 20px"
+                >Menu<span class="underline"></span
+              ></a>
+            </li>
+            <li>
+              <a href="feedback.html" style="font-size: 20px"
+                >Feedback<span class="underline"></span
+              ></a>
+            </li>
+            <li>
+              <a href="contact.html" style="font-size: 20px"
+                >Contact<span class="underline"></span
+              ></a>
+            </li>
+
+            <li id="login-link"><a href="login.html">LogIn</a></li>
+            <li id="logout-link" style="display: none">
+              <a href="#">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Your reservation form container -->
+    <div class="reservation-form-container">
+      <div class="form-image">
+        <img src="img2.jpg" alt="Restaurant Interior" onerror="this.onerror=null; this.src='img1.jpg';">
+      </div>
+      <div class="form-content">
+        <h2>Make a Reservation</h2>
+        <form id="reservationForm">
+          <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required />
+          </div>
+
+          <div class="form-group">
+            <label for="time">Time:</label>
+            <input type="time" id="time" name="time" required />
+          </div>
+
+          <div class="form-group">
+            <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" name="guests" min="1" required />
+          </div>
+
+          <div class="form-group">
+            <label for="requests">Special Requests:</label>
+            <textarea id="requests" name="requests" rows="4" placeholder="Any special requests or dietary requirements?"></textarea>
+          </div>
+
+          <button type="submit">Book Table</button>
+        </form>
+        <div id="statusMessage" class="status-message"></div>
+      </div>
+    </div>
+
+    <!-- Your scripts -->
+    <script src="maain.js"></script>
+    <script>
+      // Function to check if user is logged in
+      function checkAuthStatus() {
+        fetch("check_auth.php")
+          .then((response) => response.json())
+          .then((data) => {
+            const loginLink = document.getElementById("login-link");
+            const logoutLink = document.getElementById("logout-link");
+
+            if (data.authenticated) {
+              // User is logged in - show logout link, hide login link
+              loginLink.style.display = "none";
+              logoutLink.style.display = "block";
+              // Add a greeting with the user's name
+              if (data.user_name) {
+                logoutLink.querySelector("a").innerHTML =
+                  "Logout (" + data.user_name + ")";
+
+                // User data will be sent from session
+              }
+            } else {
+              // User is not logged in - show login link, hide logout link
+              loginLink.style.display = "block";
+              logoutLink.style.display = "none";
+            }
+          })
+          .catch((error) => {
+            console.error("Error checking authentication status:", error);
+          });
+      }
+
+      // Ensure the tables are set up when the page loads
+      function setupTables() {
+        return fetch("admin/setup_tables.php")
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Server returned " + response.status + " " + response.statusText
+              );
+            }
+            return response.text(); // Get response as text first
+          })
+          .then((text) => {
+            try {
+              // Try to parse as JSON
+              const data = JSON.parse(text);
+              console.log("Tables setup:", data.message);
+              return data;
+            } catch (e) {
+              // If parsing fails, log the actual response
+              console.error("Failed to parse JSON response:", text);
+              throw new Error("Invalid JSON response from server");
+            }
+          })
+          .catch((error) => {
+            console.error("Error setting up tables:", error);
+            // Return a default response to continue execution
+            return {
+              status: "error",
+              message: "Error setting up tables: " + error.message,
+            };
+          });
+      }
+
+      // Add event listener to logout link
+      document.addEventListener("DOMContentLoaded", function () {
+        checkAuthStatus();
+        setupTables(); // Run the table setup when the page loads
+
+        // Set today's date as the minimum date for the date input
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("date").min = today;
+
+        // Add event listener to logout link
+        const logoutLink = document.getElementById("logout-link");
+        if (logoutLink) {
+          logoutLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            window.location.href = "logout.php";
+          });
+        }
+      });
+
+      // Add specific JS for reservation form submission
+      const reservationForm = document.getElementById("reservationForm");
+      if (reservationForm) {
+        reservationForm.addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission
+
+          // First check if user is logged in
+          fetch("check_auth.php")
+            .then((response) => response.json())
+            .then((data) => {
+              if (!data.authenticated) {
+                alert(
+                  "You must be logged in to make a reservation. Redirecting to login page..."
+                );
+                window.location.href = "login.html";
+                return;
+              }
+
+              // Ensure tables are set up before submitting the reservation
+              setupTables().then(() => {
+                // If user is authenticated and tables are set up, proceed with form submission
+                // User name and email will be handled in backend from session
+                const formData = new FormData(reservationForm);
+                const statusMessage = document.getElementById("statusMessage");
+
+                // Use an absolute path to ensure the file is found
+                fetch("book_table.php", {
+                  method: "POST",
+                  body: formData,
+                })
+                  .then((response) => {
+                    console.log("Response status:", response.status);
+                    console.log("Response headers:", response.headers);
+                    return response.text().then((text) => {
+                      console.log("Raw response:", text);
+                      try {
+                        return JSON.parse(text);
+                      } catch (e) {
+                        console.error("Error parsing JSON:", e);
+                        throw new Error("Invalid JSON response");
+                      }
+                    });
+                  })
+                  .then((data) => {
+                    statusMessage.style.display = "block"; // Show status message
+                    statusMessage.textContent = data.message;
+                    if (data.status === "success") {
+                      statusMessage.className = "status-message success";
+                      reservationForm.reset(); // Clear the form on success
+
+                      // Set today's date as the minimum date for the date input again after form reset
+                      const today = new Date().toISOString().split("T")[0];
+                      document.getElementById("date").min = today;
+                    } else {
+                      statusMessage.className = "status-message error";
+                    }
+                  })
+                  .catch((error) => {
+                    console.error("Error submitting reservation:", error);
+                    statusMessage.style.display = "block";
+                    statusMessage.className = "status-message error";
+                    statusMessage.textContent =
+                      "An error occurred. Please try again later.";
+                  });
+              });
+            })
+            .catch((error) => {
+              console.error("Error checking authentication:", error);
+              const statusMessage = document.getElementById("statusMessage");
+              statusMessage.style.display = "block";
+              statusMessage.className = "status-message error";
+              statusMessage.textContent =
+                "Error checking authentication. Please try again.";
+            });
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akay Cafe and Restaurant - Menu</title>
+    <link rel="stylesheet" href="menu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Basic Reset */
+        * {
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+        }
+  
+        body {
+          padding-top: 40px; /* Match navbar height */
+        }
+  
+        /* Header and Navigation Styles */
+        header nav {
+          width: 100%;
+          background-color: rgba(19, 2, 2, 0.906);
+          z-index: 20;
+          height: 60px; /* Navbar height */
+          position: fixed;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          padding: 0 20px;
+        }
+  
+        .logo-name {
+          height: 30px; /* Logo height */
+          line-height: 30px;
+          color: aliceblue;
+          text-decoration: none;
+          font-size: 24px; /* Adjusted for better proportion */
+        }
+  
+        .navigation-bar {
+          margin-left: auto;
+        }
+  
+        .navigation-bar ul {
+          display: flex;
+          list-style: none;
+        }
+  
+        .navigation-bar ul li {
+          margin: 0 10px;
+        }
+  
+        .navigation-bar a {
+          color: #fff;
+          text-decoration: none;
+          font-size: 16px;
+        }
+  
+        /* Form Container */
+        .reservation-form-container {
+          max-width: 600px;
+          margin: 60px auto;
+          padding: 30px;
+          background-color: #f9f9f9;
+          border-radius: 8px;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+  
+        /* Form Elements */
+        .reservation-form-container input,
+        .reservation-form-container textarea {
+          width: 100%;
+          padding: 8px;
+          margin-bottom: 15px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+        }
+  
+        .reservation-form-container button {
+          width: 100%;
+          padding: 10px;
+          background-color: #333;
+          color: white;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+  
+        .status-message {
+          margin-top: 15px;
+          padding: 10px;
+          border-radius: 4px;
+          display: none;
+        }
+  
+        .status-message.success {
+          background-color: #d4edda;
+          color: #155724;
+        }
+  
+        .status-message.error {
+          background-color: #f8d7da;
+          color: #721c24;
+        }
+      </style>
+</head>
+<body>
+    <!-- Navigation bar -->
+    <header>
+        <nav>
+            <div class="logo">
+                <h2 class="logo-name">Akay Cafe and Restaurant</h2>
+            </div>
+            <div class="navigation-bar">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="reservation.html">Reservations</a></li>
+                    <li class="active"><a href="menu.html">Menu</a></li>
+                    <li><a href="feedback.html">Feedback</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li id="login-link"><a href="login.html">LogIn</a></li>
+                    <li id="logout-link" style="display: none"><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Search for dishes...">
+            <button id="search-button"><i class="fas fa-search"></i> Search</button>
+            <span><button id="cart-button"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</button></span>
+        </div>
+
+        <div id="category-nav">
+            <!-- Categories will be dynamically added here -->
+        </div>
+
+        <div class="scrollable-content">
+            <!-- Menu items will be dynamically loaded here by category -->
+        </div>
+
+        <footer>
+            <div class="total">
+                <span>Total (<span id="item-count">0</span> items)</span>
+                <span>&#8377<span id="total-price">0.00</span></span>
+            </div>
+            <button id="place-order-button">Place Order</button>
+        </footer>
+    </div>
+
+    <div id="table-booking-card" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Table Booking</h2>
+            <div class="table-selection">
+                <!-- Table buttons will be dynamically generated -->
+            </div>
+            <div class="customer-details">
+                <input type="text" id="customer-name" placeholder="Your Name" required>
+            </div>
+            <button id="pay-button">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Your Order</h2>
+            <ul id="cart-items-list"></ul>
+            <div class="cart-total">
+                <span>Total: &#8377<span id="cart-total-price">0.00</span></span>
+            </div>
+            <button id="close-cart-button">Place Order</button>
+        </div>
+    </div>
+
+    <script src="menu.js"></script>
+    <script>
+        // Function to check if user is logged in
+        function checkAuthStatus() {
+            fetch('check_auth.php')
+                .then(response => response.json())
+                .then(data => {
+                    const loginLink = document.getElementById('login-link');
+                    const logoutLink = document.getElementById('logout-link');
+                    
+                    if (data.authenticated) {
+                        // User is logged in - show logout link, hide login link
+                        loginLink.style.display = 'none';
+                        logoutLink.style.display = 'block';
+                        // Add a greeting with the user's name
+                        if (data.user_name) {
+                            logoutLink.querySelector('a').innerHTML = 'Logout (' + data.user_name + ')';
+                        }
+                    } else {
+                        // User is not logged in - show login link, hide logout link
+                        loginLink.style.display = 'block';
+                        logoutLink.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking authentication status:', error);
+                });
+        }
+
+        // Check auth status when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            
+            // Add event listener to logout link
+            const logoutLink = document.getElementById('logout-link');
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.location.href = 'logout.php';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

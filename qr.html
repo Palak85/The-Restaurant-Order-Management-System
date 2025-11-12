@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #000000;
+            --secondary: #3f37c9;
+            --success: #1c687e;
+            --danger: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .payment-container {
+            width: 100%;
+            max-width: 420px;
+            background: rgb(169, 182, 190);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .payment-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .payment-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .payment-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .payment-body {
+            padding: 25px;
+        }
+        
+        .amount-display {
+            background: var(--light);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .amount-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .amount-value {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .amount-value::before {
+            content: "₹";
+            font-size: 1.5rem;
+            margin-right: 2px;
+        }
+        
+        .qr-container {
+            background: rgb(62, 164, 125);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 0 auto 25px;
+            width: fit-content;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        canvas {
+            display: block;
+            margin: 0 auto;
+            margin-top: 15px;
+            background-color: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-upi {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-upi:hover {
+            background: var(--primary-dark);
+        }
+        
+        .btn-cash {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .btn-cash:hover {
+            background: #388E3C;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .payment-footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .payment-method {
+            display: none;
+        }
+        
+        .payment-method img {
+            height: 24px;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method img:hover {
+            opacity: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .payment-container {
+                max-width: 100%;
+            }
+            
+            .payment-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <h1>Complete Your Payment</h1>
+            <p>Scan the QR code </p>
+        </div>
+        
+        <div class="payment-body">
+            <div class="amount-display">
+                <div class="amount-label">Total Amount</div>
+                <div class="amount-value" id="amount-value">0.00</div>
+            </div>
+            
+            <div class="qr-container">
+                <canvas id="qr-code"></canvas>
+            </div>
+            
+            <div class="payment-method">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/UPI-Logo-vector.svg/1200px-UPI-Logo-vector.svg.png" alt="UPI">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Google_Pay_%28GPay%29_Logo.svg/512px-Google_Pay_%28GPay%29_Logo.svg.png" alt="Google Pay">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/PhonePe_Logo.svg/2560px-PhonePe_Logo.svg.png" alt="PhonePe">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Paytm_Logo_2x.png/640px-Paytm_Logo_2x.png" alt="Paytm">
+            </div>
+            
+            <div class="payment-options">
+                <button id="open-link" class="btn btn-upi" style="display: none;">
+                    <i class="fas fa-mobile-alt"></i> Pay via UPI App
+                </button>
+                <button id="cash-button" class="btn btn-cash">
+                    <i class="fas fa-money-bill-wave"></i> Pay with Cash
+                </button>
+            </div>
+        </div>
+        
+        <div class="payment-footer">
+            Secure payment processed via UPI • Your transaction is safe with us
+        </div>
+    </div>
+
+    <script>
+        const baseUpiLink = "upi://pay?pa=mradulraghuwanshi-3@okaxis&pn=Mradul%20Raghuwanshi&am=0.00&cu=INR&aid=uGICAgMDYrtfZGw";
+
+        const qrCanvas = document.getElementById('qr-code');
+        const openLinkButton = document.getElementById('open-link');
+        const amountValue = document.getElementById('amount-value');
+
+        // Function to get query parameters from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Get the total amount from the query parameter
+        const totalAmount = getQueryParam('total');
+
+        if (totalAmount && !isNaN(totalAmount)) {
+            // Update amount display
+            amountValue.textContent = parseFloat(totalAmount).toFixed(2);
+            
+            const updatedLink = baseUpiLink.replace("am=0.00", `am=${totalAmount}`);
+
+            // Generate the QR code
+            const qr = new QRious({
+                element: qrCanvas,
+                size: 500,
+                value: updatedLink,
+                background: '#ffffff',
+                foreground: '#4361ee',
+                level: 'H',
+                padding: 20
+            });
+
+            // Show the "Open Payment Link" button
+            openLinkButton.style.display = 'flex';
+            openLinkButton.onclick = () => window.open(updatedLink, '_blank');
+        } else {
+            // Show error in a more elegant way
+            const paymentBody = document.querySelector('.payment-body');
+            paymentBody.innerHTML = `
+                <div style="text-align: center; padding: 30px;">
+                    <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: var(--danger); margin-bottom: 20px;"></i>
+                    <h3 style="margin-bottom: 10px; color: var(--danger);">Payment Error</h3>
+                    <p style="color: #666;">No valid total amount provided. Please go back and try again.</p>
+                    <button onclick="window.history.back()" style="margin-top: 20px; background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                        Go Back
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

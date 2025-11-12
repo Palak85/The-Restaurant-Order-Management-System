@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Feedback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e74c3c;
+            --primary-dark: #c0392b;
+            --secondary: #f39c12;
+            --success: #27ae60;
+            --light: #f8f9fa;
+            --dark: #2c3e50;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('uploads/img6.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-top: 80px; /* Added space for navbar */
+        }
+        
+        /* Header and Navigation Styles */
+        header nav {
+            width: 100%;
+            background-color: rgba(19, 2, 2, 0.906);
+            z-index: 20;
+            height: 60px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo-name {
+            height: 30px;
+            line-height: 30px;
+            color: aliceblue;
+            text-decoration: none;
+            font-size: 24px;
+        }
+
+        .navigation-bar {
+            margin-left: auto;
+        }
+
+        .navigation-bar ul {
+            display: flex;
+            list-style: none;
+        }
+
+        .navigation-bar ul li {
+            margin: 0 10px;
+        }
+
+        .navigation-bar a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        .feedback-container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .feedback-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .feedback-header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .feedback-header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .feedback-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .rating-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .rating-btn {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: var(--border-radius);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .rating-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .rating-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .rating-btn i {
+            font-size: 1.5rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .thank-you-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .thank-you-message i {
+            font-size: 3rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .thank-you-message h2 {
+            color: var(--success);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .feedback-container {
+                max-width: 100%;
+            }
+            
+            .feedback-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with navigation -->
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html">
+                    <h2 class="logo-name">Akay Cafe and Restaurant</h2>
+                </a>
+            </div>
+            <div class="navigation-bar">
+                <ul>
+                    <li>
+                        <a href="index.html" style="font-size: 20px">Home<span class="underline"></span></a>
+                    </li>
+                    <li>
+                        <a href="reservation.html" style="font-size: 20px">Reservations<span class="underline"></span></a>
+                    </li>
+                    <li>
+                        <a href="menu.html" style="font-size: 20px">Menu<span class="underline"></span></a>
+                    </li>
+                    <li class="active">
+                        <a href="feedback.html" style="font-size: 20px">Feedback<span class="underline"></span></a>
+                    </li>
+                    <li>
+                        <a href="contact.html" style="font-size: 20px">Contact<span class="underline"></span></a>
+                    </li>
+                    <li id="login-link"><a href="login.html">LogIn</a></li>
+                    <li id="logout-link" style="display: none"><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="feedback-container">
+        <div class="feedback-header">
+            <h1>Share Your Experience</h1>
+            <p>Help us improve our service</p>
+        </div>
+        
+        <div class="feedback-body">
+            <form id="feedback-form">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>How was your experience?</label>
+                    <div class="rating-group">
+                        <button type="button" class="rating-btn" data-rating="1">
+                            <i class="fas fa-frown"></i>
+                            <span>Poor</span>
+                        </button>
+                        <button type="button" class="rating-btn" data-rating="2">
+                            <i class="fas fa-meh"></i>
+                            <span>Fair</span>
+                        </button>
+                        <button type="button" class="rating-btn" data-rating="3">
+                            <i class="fas fa-smile"></i>
+                            <span>Good</span>
+                        </button>
+                        <button type="button" class="rating-btn" data-rating="4">
+                            <i class="fas fa-laugh"></i>
+                            <span>Excellent</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="feedback">Your Feedback</label>
+                    <textarea id="feedback" class="form-control" placeholder="Tell us about your experience..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">
+                    Submit Feedback
+                </button>
+            </form>
+            
+            <div class="thank-you-message">
+                <i class="fas fa-check-circle"></i>
+                <h2>Thank You!</h2>
+                <p>Your feedback has been submitted successfully.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="maain.js"></script>
+    <script>
+        // Function to check if user is logged in
+        function checkAuthStatus() {
+            fetch("check_auth.php")
+                .then((response) => response.json())
+                .then((data) => {
+                    const loginLink = document.getElementById("login-link");
+                    const logoutLink = document.getElementById("logout-link");
+
+                    if (data.authenticated) {
+                        // User is logged in - show logout link, hide login link
+                        loginLink.style.display = "none";
+                        logoutLink.style.display = "block";
+                        // Add a greeting with the user's name
+                        if (data.user_name) {
+                            logoutLink.querySelector("a").innerHTML = "Logout (" + data.user_name + ")";
+                        }
+                    } else {
+                        // User is not logged in - show login link, hide logout link
+                        loginLink.style.display = "block";
+                        logoutLink.style.display = "none";
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error checking authentication status:", error);
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            checkAuthStatus();
+
+            // Add event listener to logout link
+            const logoutLink = document.getElementById("logout-link");
+            if (logoutLink) {
+                logoutLink.addEventListener("click", function (e) {
+                    e.preventDefault();
+                    window.location.href = "logout.php";
+                });
+            }
+
+            // Handle feedback form submission
+            const form = document.getElementById('feedback-form');
+            const ratingButtons = document.querySelectorAll('.rating-btn');
+            const thankYouMessage = document.querySelector('.thank-you-message');
+            
+            let selectedRating = 0;
+            
+            ratingButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    ratingButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedRating = this.dataset.rating;
+                });
+            });
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Here you would typically send the data to your server
+                // For now, we'll just show the thank you message
+                form.style.display = 'none';
+                thankYouMessage.style.display = 'block';
+                
+                // Reset form after 3 seconds
+                setTimeout(() => {
+                    form.reset();
+                    form.style.display = 'block';
+                    thankYouMessage.style.display = 'none';
+                    ratingButtons.forEach(btn => btn.classList.remove('active'));
+                    selectedRating = 0;
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html> 
+
